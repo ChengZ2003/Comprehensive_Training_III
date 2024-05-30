@@ -1,4 +1,3 @@
-# main.py
 import os
 import torch
 import torch.nn as nn
@@ -6,24 +5,24 @@ import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter
-from resnet import ResNet18
+from tqdm import tqdm
 from mobilenet import MobileNetV2Model
 
 # 创建目录保存模型
-model_dir = "./models/mobile_net_v2"
+model_dir = "./model_mobilenetv2"
 if not os.path.exists(model_dir):
     os.makedirs(model_dir)
 
 # 定义超参数
 num_classes = 10  # MNIST数据集有10个类别
-num_epochs = 10
-batch_size = 128
+num_epochs = 3
+batch_size = 100
 learning_rate = 0.001
 
 # 数据预处理
 transform = transforms.Compose(
     [
-        transforms.Resize((224, 224)),  # 将图像调整到ResNet18所需的尺寸
+        transforms.Resize((224, 224)),  # 将图像调整到MobileNetV2所需的尺寸
         transforms.ToTensor(),
         transforms.Normalize((0.5,), (0.5,)),  # 对灰度图像进行标准化
     ]
@@ -45,7 +44,6 @@ test_loader = torch.utils.data.DataLoader(
 )
 
 # 初始化模型、损失函数和优化器
-# model = ResNet18()
 model = MobileNetV2Model()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
@@ -54,14 +52,14 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
 # 初始化TensorBoard
-writer = SummaryWriter(log_dir="./logs")
+writer = SummaryWriter(log_dir="./logs_mobilenetv2")
 
 # 训练模型
 total_step = len(train_loader)
-for epoch in range(num_epochs):
+for epoch in tqdm(range(num_epochs), desc="Epochs"):
     model.train()
     train_loss = 0.0
-    for i, (images, labels) in enumerate(train_loader):
+    for i, (images, labels) in tqdm(enumerate(train_loader), desc="Steps"):
         images = images.to(device)
         labels = labels.to(device)
 

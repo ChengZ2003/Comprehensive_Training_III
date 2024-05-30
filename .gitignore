@@ -19,6 +19,9 @@ data/
 *log*
 *log.txt
 
+*.png
+*.ipynb
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
