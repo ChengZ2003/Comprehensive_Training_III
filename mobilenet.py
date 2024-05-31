@@ -95,7 +95,3 @@ class MobileNetV2(nn.Module):
         out = out.view(out.size(0), -1)
         out = self.fc(out)
         return out
-
-
-def MobileNetV2Model():
-    return MobileNetV2()

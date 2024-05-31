@@ -74,5 +74,5 @@ class ResNet(nn.Module):
         return out
 
 
-def ResNet18():
-    return ResNet(BasicBlock, [2, 2, 2, 2])
+def ResNet18(num_classes=10):
+    return ResNet(num_classes=num_classes, block=BasicBlock, num_blocks=[2, 2, 2, 2])
