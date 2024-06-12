@@ -20,7 +20,7 @@ data/
 *log.txt
 
 *.png
-*.ipynb
+ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
